@@ -13,3 +13,10 @@ export function getNewAPI() {
         method: 'get'
     })
 }
+
+export function getNewHotAPI() {
+    return http({
+        url: '/home/hot',
+        method: 'get'
+    })
+}

@@ -6,3 +6,10 @@ export function getBannerAPI() {
         method: 'get'
     })
 }
+
+export function getNewAPI() {
+    return http({
+        url: '/home/new',
+        method: 'get'
+    })
+}

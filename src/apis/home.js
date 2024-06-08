@@ -20,3 +20,12 @@ export function getNewHotAPI() {
         method: 'get'
     })
 }
+
+export function getGoodsAPI() {
+    return http({
+        url: '/home/goods',
+        method: 'get'
+    })
+}
+
+

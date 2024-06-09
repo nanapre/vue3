@@ -25,6 +25,13 @@ const getSubCategoryGoodsData = async () => {
     console.log("SubCategoryGoodsData", SubCategoryGoodsData.value)
 }
 
+const tabChange = () => {
+    console.log('tab切换了', reqData.value.sortField)
+    reqData.value.page = 1
+    getSubCategoryGoodsData()
+
+}
+
 onMounted(() => {
     getSubGategoryData()
     getSubCategoryGoodsData()
@@ -44,7 +51,7 @@ onMounted(() => {
             </el-breadcrumb>
         </div>
         <div class="sub-container">
-            <el-tabs>
+            <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
                 <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
                 <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
                 <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>

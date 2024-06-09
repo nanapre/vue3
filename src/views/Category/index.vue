@@ -1,7 +1,9 @@
 <script setup>
 import { getCategoryListAPI } from '@/apis/category';
+import { getBannerAPI } from '@/apis/home';
 import { onMounted, ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
+//获取路由里携带的参数
 const route = useRoute()
 const getCategoryData = ref({})
 const getCategoryList = async (id) => {
@@ -9,8 +11,18 @@ const getCategoryList = async (id) => {
     getCategoryData.value = res.data.result
 
 }
+
+const BannerData = ref([])
+const getBanner = async () => {
+    let res = getBannerAPI({ distributionSite: '2' })
+    BannerData.value = (await res).data.result
+}
+
 watchEffect(() => {
     getCategoryList(route.params.id)
+})
+onMounted(() => {
+    getBanner()
 })
 </script>
 
@@ -23,6 +35,14 @@ watchEffect(() => {
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
                     <el-breadcrumb-item>{{ getCategoryData.name }}</el-breadcrumb-item>
                 </el-breadcrumb>
+            </div>
+            <!-- 轮播图 -->
+            <div class="home-banner">
+                <el-carousel height="500px">
+                    <el-carousel-item v-for="item in BannerData" :key="item.id">
+                        <img :src="item.imgUrl" alt="">
+                    </el-carousel-item>
+                </el-carousel>
             </div>
         </div>
     </div>
@@ -105,6 +125,17 @@ watchEffect(() => {
 
     .bread-container {
         padding: 25px 0;
+    }
+}
+
+.home-banner {
+    width: 1240px;
+    height: 500px;
+    margin: 0 auto;
+
+    img {
+        width: 100%;
+        height: 500px;
     }
 }
 </style>

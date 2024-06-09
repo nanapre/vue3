@@ -1,9 +1,13 @@
 import http from "@/utils/http.js";
 
-export function getBannerAPI() {
+export function getBannerAPI(params = {}) {
+    const { distributionSite = '1' } = params//ES6 中的对象解构赋值
     return http({
         url: '/home/banner',
-        method: 'get'
+        method: 'get',
+        params: {
+            distributionSite
+        }
     })
 }
 

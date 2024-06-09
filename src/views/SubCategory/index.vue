@@ -24,14 +24,26 @@ const getSubCategoryGoodsData = async () => {
     SubCategoryGoodsData.value = res.data.result.items
     console.log("SubCategoryGoodsData", SubCategoryGoodsData.value)
 }
-
+//tab切换回调
 const tabChange = () => {
-    console.log('tab切换了', reqData.value.sortField)
+    // console.log('tab切换了', reqData.value.sortField)
+    disabled.value = false
     reqData.value.page = 1
     getSubCategoryGoodsData()
 
 }
+//
+const disabled = ref(false)
+const load = async () => {
+    reqData.value.page++
+    let res = await getSubCategoryGoodsAPI(reqData.value)
+    SubCategoryGoodsData.value = [...SubCategoryGoodsData.value, ...res.data.result.items]
+    if (res.data.result.items.length === 0) {
+        console.log('data stop')
+        disabled.value = true
+    }
 
+}
 onMounted(() => {
     getSubGategoryData()
     getSubCategoryGoodsData()
@@ -56,7 +68,7 @@ onMounted(() => {
                 <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
                 <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
             </el-tabs>
-            <div class="body">
+            <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
                 <!-- 商品列表-->
                 <GoodsItem v-for="goods in SubCategoryGoodsData" :key="goods.id" :goods="goods"></GoodsItem>
             </div>

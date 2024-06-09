@@ -1,29 +1,11 @@
 <script setup>
-import { getCategoryListAPI } from '@/apis/category';
-import { getBannerAPI } from '@/apis/home';
-import { onMounted, ref, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-//获取路由里携带的参数
-const route = useRoute()
-const getCategoryData = ref({})
-const getCategoryList = async (id) => {
-    let res = await getCategoryListAPI(id)
-    getCategoryData.value = res.data.result
+import GoodsItem from '../Home/components/GoodsItem.vue';
+import { useBanner } from './composables/useBanner';
+import { useCategory } from './composables/useCategory';
 
-}
+const { BannerData } = useBanner()
+const { CategoryData } = useCategory()
 
-const BannerData = ref([])
-const getBanner = async () => {
-    let res = getBannerAPI({ distributionSite: '2' })
-    BannerData.value = (await res).data.result
-}
-
-watchEffect(() => {
-    getCategoryList(route.params.id)
-})
-onMounted(() => {
-    getBanner()
-})
 </script>
 
 <template>
@@ -33,7 +15,7 @@ onMounted(() => {
             <div class="bread-container">
                 <el-breadcrumb separator=">">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>{{ getCategoryData.name }}</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{ CategoryData.name }}</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
             <!-- 轮播图 -->
@@ -43,6 +25,26 @@ onMounted(() => {
                         <img :src="item.imgUrl" alt="">
                     </el-carousel-item>
                 </el-carousel>
+            </div>
+            <!-- 全部分类 -->
+            <div class="sub-list">
+                <h3>全部分类</h3>
+                <ul>
+                    <li v-for="i in CategoryData.children" :key="i.id">
+                        <RouterLink to="/">
+                            <img :src="i.picture" />
+                            <p>{{ i.name }}</p>
+                        </RouterLink>
+                    </li>
+                </ul>
+            </div>
+            <div class="ref-goods" v-for="item in CategoryData.children" :key="item.id">
+                <div class="head">
+                    <h3>- {{ item.name }}-</h3>
+                </div>
+                <div class="body">
+                    <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
+                </div>
             </div>
         </div>
     </div>

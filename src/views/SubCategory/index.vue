@@ -1,18 +1,33 @@
 <script setup>
-import { getSubCategoryListAPI } from '@/apis/category';
+import { getSubCategoryListAPI, getSubCategoryGoodsAPI } from '@/apis/category';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-
+import GoodsItem from '../Home/components/GoodsItem.vue';
+//获取二级分类的详情信息
 const route = useRoute()
 const subGategoryData = ref({})
 const getSubGategoryData = async () => {
     let res = await getSubCategoryListAPI(route.params.id)
     subGategoryData.value = res.data.result
-    console.log('subGategoryData', subGategoryData.value)
+    // console.log('subGategoryData', subGategoryData.value)
+}
+//获取二级分类的商品详情信息
+const SubCategoryGoodsData = ref({})
+const reqData = ref({
+    categoryId: route.params.id,
+    page: 1,
+    pageSize: 20,
+    sortField: 'publishTime'
+})
+const getSubCategoryGoodsData = async () => {
+    let res = await getSubCategoryGoodsAPI(reqData.value)
+    SubCategoryGoodsData.value = res.data.result.items
+    console.log("SubCategoryGoodsData", SubCategoryGoodsData.value)
 }
 
 onMounted(() => {
     getSubGategoryData()
+    getSubCategoryGoodsData()
 })
 </script>
 
@@ -36,6 +51,7 @@ onMounted(() => {
             </el-tabs>
             <div class="body">
                 <!-- 商品列表-->
+                <GoodsItem v-for="goods in SubCategoryGoodsData" :key="goods.id" :goods="goods"></GoodsItem>
             </div>
         </div>
     </div>

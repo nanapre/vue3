@@ -19,3 +19,11 @@ export function getSubCategoryListAPI(id) {
         }
     })
 }
+
+export const getSubCategoryGoodsAPI = (data) => {
+    return http({
+        url: '/category/goods/temporary',
+        method: 'POST',
+        data
+    })
+}

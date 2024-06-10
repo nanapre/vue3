@@ -13,8 +13,13 @@ export const userInfoStore = defineStore('user', () => {
         userInfo.value = res.data.result
     }
 
+    const clearUserInfo = () => {
+        userInfo.value = {}
+    }
+
     return {
         getUserInfo,
+        clearUserInfo,
         userInfo,
         resData
     }

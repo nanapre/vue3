@@ -1,7 +1,15 @@
 <script setup>
 import { userInfoStore } from '@/stores/user';
+import { useRouter } from 'vue-router';
 
 const useUserInfoStore = userInfoStore()
+const router = useRouter()
+
+const confirm = () => {
+    useUserInfoStore.clearUserInfo()
+    router.push('/login')
+
+}
 
 </script>
 
@@ -13,7 +21,8 @@ const useUserInfoStore = userInfoStore()
                     <li><a href="javascript:;"><i class="iconfont icon-user"></i>
                             {{ useUserInfoStore.userInfo.account }}</a></li>
                     <li>
-                        <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+                        <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消"
+                            @confirm="confirm">
                             <template #reference>
                                 <a href="javascript:;">退出登录</a>
                             </template>

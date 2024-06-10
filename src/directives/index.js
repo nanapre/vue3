@@ -1,6 +1,6 @@
 //使用vueUse监测元素是否进入了视口区域
 import { useIntersectionObserver } from '@vueuse/core'
-
+// 注册全局的自定义指令
 export const lazyPlugin = {
     install(app) {
         app.directive('img-lazy', {

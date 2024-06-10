@@ -3,8 +3,6 @@ import { getGoodsDetailAPI } from '@/apis/detail';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import DetailHot from './components/DetailHot.vue'
-import ImagView from '@/components/ImagView/index.vue'
-
 const route = useRoute()
 const goodsDetailData = ref({})
 const getGoodsDetailData = async () => {
@@ -28,7 +26,7 @@ onMounted(() => getGoodsDetailData())
                     <el-breadcrumb-item :to="{ path: `/category/sub/${goodsDetailData.categories[0].id}` }">
                         {{ goodsDetailData.categories[0].name }}
                     </el-breadcrumb-item>
-                    <el-breadcrumb-item>抓绒保暖，毛毛虫子儿童运动鞋</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{ goodsDetailData.name }}</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
             <!-- 商品信息 -->
@@ -37,7 +35,7 @@ onMounted(() => getGoodsDetailData())
                     <div class="goods-info">
                         <div class="media">
                             <!-- 图片预览区 -->
-                            <ImagView />
+                            <ImagView :imageList="goodsDetailData.mainPictures" />
                             <!-- 统计数量 -->
                             <ul class="goods-sales">
                                 <li>
@@ -57,7 +55,7 @@ onMounted(() => getGoodsDetailData())
                                 </li>
                                 <li>
                                     <p>品牌信息</p>
-                                    <p>{{ goodsDetailData.brand.name }}</p>
+                                    <p>{{ goodsDetailData.brand?.name }}</p>
                                     <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                                 </li>
                             </ul>
@@ -86,7 +84,7 @@ onMounted(() => getGoodsDetailData())
                                 </dl>
                             </div>
                             <!-- sku组件 -->
-
+                            <Sku :goods="goodsDetailData" />
                             <!-- 数据组件 -->
 
                             <!-- 按钮组件 -->

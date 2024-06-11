@@ -1,17 +1,53 @@
 <script setup>
 import { getGoodsDetailAPI } from '@/apis/detail';
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import DetailHot from './components/DetailHot.vue'
+import { ElMessage } from 'element-plus';
+import { useCarStore } from '@/stores/car';
 const route = useRoute()
 const goodsDetailData = ref({})
-const getGoodsDetailData = async () => {
-    let res = await getGoodsDetailAPI(route.params.id)
+const getGoodsDetailData = async (id) => {
+    let res = await getGoodsDetailAPI(id)
     goodsDetailData.value = res.data.result
     console.log("goodsDetailData.value", goodsDetailData.value)
 }
 
-onMounted(() => getGoodsDetailData())
+const count = ref(1)
+const countChange = () => { }
+//获取商品规格数据
+let skuObj = {}
+const skuChange = (sku) => {
+    //console.log(sku)
+    skuObj = sku
+}
+//加入购物车
+const carStore = useCarStore()
+const addCar = () => {
+    if (skuObj.skuId) {
+        carStore.addCar({
+            id: goodsDetailData.value.id,
+            name: goodsDetailData.value.name,
+            picture: goodsDetailData.value.mainPictures[0],
+            count: count.value,
+            price: goodsDetailData.value.price,
+            skuId: skuObj.skuId,
+            attrsText: skuObj.specsText,
+            selected: true
+        })
+    } else {
+        ElMessage.warning('请选择商品规格')
+    }
+}
+
+
+
+onMounted(() => getGoodsDetailData(route.params.id))
+
+onBeforeRouteUpdate((to) => getGoodsDetailData(to.params.id))
+
+
+
 </script>
 
 <template>
@@ -65,8 +101,8 @@ onMounted(() => getGoodsDetailData())
                             <p class="g-name"> {{ goodsDetailData.name }} </p>
                             <p class="g-desc">{{ goodsDetailData.desc }} </p>
                             <p class="g-price">
-                                <span>{{ goodsDetailData.oldPrice }}</span>
-                                <span> {{ goodsDetailData.price }}</span>
+                                <span>{{ goodsDetailData.price }}</span>
+                                <span> {{ goodsDetailData.oldPrice }}</span>
                             </p>
                             <div class="g-service">
                                 <dl>
@@ -84,12 +120,12 @@ onMounted(() => getGoodsDetailData())
                                 </dl>
                             </div>
                             <!-- sku组件 -->
-                            <Sku :goods="goodsDetailData" />
+                            <Sku :goods="goodsDetailData" @change="skuChange" />
                             <!-- 数据组件 -->
-
+                            <el-input-number v-model="count" :min="1" @change="countChange" />
                             <!-- 按钮组件 -->
                             <div>
-                                <el-button size="large" class="btn">
+                                <el-button size="large" class="btn" @click="addCar">
                                     加入购物车
                                 </el-button>
                             </div>

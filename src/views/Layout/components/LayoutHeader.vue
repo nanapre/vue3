@@ -1,5 +1,7 @@
 <script setup>
 import { useCategoryStore } from '@/stores/category';
+import car from './car.vue'
+
 const categoryStore = useCategoryStore()
 </script>
 
@@ -25,7 +27,7 @@ const categoryStore = useCategoryStore()
                 <input type="text" placeholder="搜一搜">
             </div>
             <!-- 头部购物车 -->
-
+            <car />
         </div>
     </header>
 </template>

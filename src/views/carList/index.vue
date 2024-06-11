@@ -10,6 +10,8 @@ const singleCheck = (i, selected) => {
 const allCheck = (selected) => {
     carStore.allCheck(selected)
 }
+
+
 </script>
 
 <template>

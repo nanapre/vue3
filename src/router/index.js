@@ -6,6 +6,10 @@ import Category from '@/views/Category/index.vue'
 import SubCategory from '@/views/SubCategory/index.vue'
 import Detail from '@/views/Detail/index.vue'
 import carList from '@/views/carList/index.vue'
+import order from '@/views/order/index.vue'
+import pay from '@/views/pay/index.vue'
+import PayBack from '@/views/pay/paycallback.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -29,7 +33,17 @@ const router = createRouter({
         }, {
           path: 'carList',
           component: carList
-        }
+        }, {
+          path: 'order',
+          component: order
+        }, {
+          path: 'pay',
+          component: pay
+        },
+        {
+          path: 'paycallback', // 注意路径，必须是paycallback
+          component: PayBack
+        },
       ]
     },
     {

@@ -84,6 +84,7 @@ export const useCarStore = defineStore('car', () => {
     // 是否全选计算属性
     const isAll = computed(() => cartList.value.every((item) => item.selected))
     return {
+        isLogin,
         cartList,
         allCount,
         allPrice,

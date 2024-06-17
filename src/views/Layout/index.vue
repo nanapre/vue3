@@ -14,12 +14,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
+    <div class="all">
         <LayoutFixed />
         <LayoutNav />
         <LayoutHeader />
         <router-view />
-        <LayoutFooter />
+        <LayoutFooter class="end" />
     </div>
 </template>
 

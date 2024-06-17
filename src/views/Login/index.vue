@@ -56,7 +56,7 @@ const doLogin = () => {
         <header class="login-header">
             <div class="container m-top-20">
                 <h1 class="logo">
-                    <RouterLink to="/">小兔鲜</RouterLink>
+                    <RouterLink to="/">欢乐购</RouterLink>
                 </h1>
                 <RouterLink class="entry" to="/">
                     进入网站首页
@@ -103,7 +103,7 @@ const doLogin = () => {
                     <a href="javascript:;">搜索推荐</a>
                     <a href="javascript:;">友情链接</a>
                 </p>
-                <p>CopyRight &copy; 小兔鲜儿</p>
+                <p>CopyRight &copy; 欢乐购</p>
             </div>
         </footer>
     </div>
@@ -113,37 +113,31 @@ const doLogin = () => {
 .login-header {
     background: #fff;
     border-bottom: 1px solid #e4e4e4;
+    height: 20vh;
 
     .container {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: space-between;
+
     }
 
     .logo {
-        width: 200px;
+        width: 15vw;
 
         a {
             display: block;
-            height: 132px;
+            height: 20vh;
             width: 100%;
             text-indent: -9999px;
-            background: url("@/assets/images/logo.png") no-repeat center 18px / contain;
+            background: url("@/assets/images/logo.png") no-repeat center / contain;
         }
     }
 
-    .sub {
-        flex: 1;
-        font-size: 24px;
-        font-weight: normal;
-        margin-bottom: 38px;
-        margin-left: 20px;
-        color: #666;
-    }
+
 
     .entry {
-        width: 120px;
-        margin-bottom: 38px;
+        width: 10vw;
         font-size: 16px;
 
         i {
@@ -156,15 +150,16 @@ const doLogin = () => {
 
 .login-section {
     background: url('@/assets/images/login-bg.png') no-repeat center / cover;
-    height: 488px;
+    height: 60vh;
+    display: flex;
+    align-items: center;
     position: relative;
 
     .wrapper {
         width: 380px;
         background: #fff;
         position: absolute;
-        left: 50%;
-        top: 54px;
+        left: 55%;
         transform: translate3d(100px, 0, 0);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 
@@ -193,6 +188,7 @@ const doLogin = () => {
 .login-footer {
     padding: 30px 0 50px;
     background: #fff;
+    height: 20vh;
 
     p {
         text-align: center;

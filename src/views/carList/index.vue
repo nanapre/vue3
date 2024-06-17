@@ -1,7 +1,10 @@
 <script setup>
 import { useCarStore } from '@/stores/car';
+import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
+import 'element-plus/theme-chalk/el-message.css'
 
-
+const router = useRouter()
 const carStore = useCarStore()
 
 const singleCheck = (i, selected) => {
@@ -9,6 +12,19 @@ const singleCheck = (i, selected) => {
 }
 const allCheck = (selected) => {
     carStore.allCheck(selected)
+}
+
+const settlement = () => {
+    if (carStore.isLogin) {
+        router.push('/order');
+    } else {
+        router.push('/login');
+        ElMessage.warning("请登录进行结算")
+    }
+}
+
+const delCart = async (i) => {
+    await carStore.deleteCarItem(i.skuId)
 }
 
 
@@ -74,7 +90,7 @@ const allCheck = (selected) => {
                             <td colspan="6">
                                 <div class="cart-none">
                                     <el-empty description="购物车列表为空">
-                                        <el-button type="primary">随便逛逛</el-button>
+                                        <el-button type="primary" @click="$router.push('/')">随便逛逛</el-button>
                                     </el-empty>
                                 </div>
                             </td>
@@ -90,7 +106,8 @@ const allCheck = (selected) => {
                     <span class="red">¥ {{ carStore.selectedPrice }} </span>
                 </div>
                 <div class="total">
-                    <el-button size="large" type="primary" @click="$router.push('/order')">下单结算</el-button>
+                    <!-- $router.push('/order') -->
+                    <el-button size="large" type="primary" @click="settlement">下单结算</el-button>
                 </div>
             </div>
         </div>

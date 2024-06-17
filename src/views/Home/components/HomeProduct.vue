@@ -24,7 +24,7 @@ onMounted(() => {
                     <img v-img-lazy="cate.picture" />
                     <strong class="label">
                         <span>{{ cate.name }}馆</span>
-                        <span>{{ cate.saleInfo }}</span>
+                        <span class="ellipsis">{{ cate.saleInfo }}</span>
                     </strong>
                 </RouterLink>
                 <ul class="goods-list">
@@ -99,6 +99,7 @@ onMounted(() => {
                     &:last-child {
                         flex: 1;
                         background: rgba(0, 0, 0, 0.7);
+
                     }
                 }
             }

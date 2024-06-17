@@ -6,11 +6,14 @@ import DetailHot from './components/DetailHot.vue'
 import { ElMessage } from 'element-plus';
 import { useCarStore } from '@/stores/car';
 const route = useRoute()
+
+
 const goodsDetailData = ref({})
 const getGoodsDetailData = async (id) => {
     let res = await getGoodsDetailAPI(id)
     goodsDetailData.value = res.data.result
-    console.log("goodsDetailData.value", goodsDetailData.value)
+    console.log(res)
+
 }
 
 const count = ref(1)
@@ -56,7 +59,7 @@ onBeforeRouteUpdate((to) => getGoodsDetailData(to.params.id))
             <div class="bread-container">
                 <el-breadcrumb separator=">">
                     <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="{ path: `/category/${goodsDetailData.categories[1].id}` }">
+                    <el-breadcrumb-item :to="{ path: `/category/${goodsDetailData?.categories[1].id}` }">
                         {{ goodsDetailData.categories[1].name }}
                     </el-breadcrumb-item>
                     <el-breadcrumb-item :to="{ path: `/category/sub/${goodsDetailData.categories[0].id}` }">
@@ -66,6 +69,7 @@ onBeforeRouteUpdate((to) => getGoodsDetailData(to.params.id))
                 </el-breadcrumb>
             </div>
             <!-- 商品信息 -->
+
             <div class="info-container">
                 <div>
                     <div class="goods-info">

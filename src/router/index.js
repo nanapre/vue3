@@ -9,6 +9,10 @@ import carList from '@/views/carList/index.vue'
 import order from '@/views/order/index.vue'
 import pay from '@/views/pay/index.vue'
 import PayBack from '@/views/pay/paycallback.vue'
+import member from '@/views/member/index.vue'
+import memberUser from '@/views/member/component/memberUser.vue'
+import memberOrder from '@/views/member/component/memberOrder.vue'
+import memberAddress from '@/views/member/component/memberAddress.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +47,23 @@ const router = createRouter({
         {
           path: 'paycallback', // 注意路径，必须是paycallback
           component: PayBack
+        },
+        {
+          path: 'member',
+          redirect: '/member/user',
+          component: member,
+          children: [
+            {
+              path: 'user',
+              component: memberUser
+            }, {
+              path: 'order',
+              component: memberOrder
+            },
+            {
+              path: 'address',
+              component: memberAddress
+            }]
         },
       ]
     },

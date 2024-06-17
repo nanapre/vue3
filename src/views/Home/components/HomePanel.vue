@@ -18,7 +18,10 @@ defineProps({
             <div class="head">
                 <!-- 主标题和副标题 -->
                 <h3>
-                    {{ title }}<small>{{ subTitle }}</small>
+                    <div class="left"></div>
+                    <div>{{ title }}</div>
+
+                    <small>{{ subTitle }}</small>
                 </h3>
             </div>
             <!-- 主体内容区域 -->
@@ -37,17 +40,29 @@ defineProps({
         align-items: flex-end;
 
         h3 {
-            flex: 1;
+
             font-size: 32px;
             font-weight: normal;
             margin-left: 6px;
             height: 35px;
+            width: 350px;
             line-height: 35px;
+            display: flex;
+
+
+
+
+            .left {
+                margin-right: 10px;
+                border-left: 6px red solid;
+
+            }
 
             small {
                 font-size: 16px;
                 color: #999;
                 margin-left: 20px;
+
             }
         }
     }

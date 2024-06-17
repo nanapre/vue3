@@ -6,14 +6,20 @@ import { useCarStore } from '@/stores/car';
 const carStore = useCarStore()
 const router = useRouter()
 
-const checkInfo = ref({})  // 订单对象
+const checkInfo = ref([])  // 订单对象
+const addressData = ref([])
 const curAddress = ref({})  // 地址对象
+const postFee = ref(0)
+const totalPayPrice = ref(0)
 
 const getOrderList = async () => {
     let res = await getOrderAPI()
-    checkInfo.value = res.data.result
-    curAddress.value = res.data.result.userAddresses
-    curAddress.value = curAddress.value.find((item) => item.isDefault === 0)
+    checkInfo.value = carStore.cartList.filter(item => item.selected === true)
+    console.log("checkInfo", checkInfo.value)
+    addressData.value = res.data.result.userAddresses
+    curAddress.value = addressData.value.find((item) => item.isDefault === 0)
+    postFee.value = res.data.result.summary.postFee
+    totalPayPrice.value = carStore.selectedPrice + postFee.value
 }
 onMounted(() => getOrderList())
 //控制切换地址弹窗显示
@@ -34,7 +40,7 @@ const submitOrder = async () => {
         payType: 1,
         payChannel: 1,
         buyerMessage: "",
-        goods: checkInfo.value.goods.map(item => {
+        goods: checkInfo.value.map(item => {
             return {
                 skuId: item.skuId,
                 count: item.count
@@ -72,7 +78,7 @@ const submitOrder = async () => {
                         </div>
                         <div class="action">
                             <el-button size="large" @click="showDialog = true">切换地址</el-button>
-                            <el-button size="large" @click="addFlag = true">添加地址</el-button>
+                            <el-button size="large" @click="router.push('/member/address')">添加地址</el-button>
                         </div>
                     </div>
                 </div>
@@ -90,7 +96,7 @@ const submitOrder = async () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="i in checkInfo.goods" :key="i.id">
+                            <tr v-for="i in checkInfo" :key="i.id">
                                 <td>
                                     <a href="javascript:;" class="info">
                                         <img :src="i.picture" alt="">
@@ -101,9 +107,9 @@ const submitOrder = async () => {
                                     </a>
                                 </td>
                                 <td>&yen;{{ i.price }}</td>
-                                <td>{{ i.price }}</td>
-                                <td>&yen;{{ i.totalPrice }}</td>
-                                <td>&yen;{{ i.totalPayPrice }}</td>
+                                <td>{{ i.count }}</td>
+                                <td>&yen;{{ (i.price * i.count).toFixed(2) }}</td>
+                                <td>&yen;{{ (i.price * i.count).toFixed(2) }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -128,19 +134,19 @@ const submitOrder = async () => {
                     <div class="total">
                         <dl>
                             <dt>商品件数：</dt>
-                            <dd>{{ checkInfo.summary?.goodsCount }}件</dd>
+                            <dd>{{ carStore.selectedCount }}件</dd>
                         </dl>
                         <dl>
                             <dt>商品总价：</dt>
-                            <dd>¥{{ checkInfo.summary?.totalPrice.toFixed(2) }}</dd>
+                            <dd>¥{{ carStore.selectedPrice.toFixed(2) }}</dd>
                         </dl>
                         <dl>
                             <dt>运<i></i>费：</dt>
-                            <dd>¥{{ checkInfo.summary?.postFee.toFixed(2) }}</dd>
+                            <dd>¥{{ postFee?.toFixed(2) }}</dd>
                         </dl>
                         <dl>
                             <dt>应付总额：</dt>
-                            <dd class="price">{{ checkInfo.summary?.totalPayPrice.toFixed(2) }}</dd>
+                            <dd class="price">{{ totalPayPrice?.toFixed(2) }}</dd>
                         </dl>
                     </div>
                 </div>
@@ -154,8 +160,8 @@ const submitOrder = async () => {
     <!-- 切换地址 -->
     <el-dialog v-model="showDialog" title="切换收货地址" width="30%" center>
         <div class="addressWrapper">
-            <div class="text item" :class="{ active: activeAddress.id === item.id }"
-                v-for="item in checkInfo.userAddresses" :key="item.id" @click="switchAddress(item)">
+            <div class="text item" :class="{ active: activeAddress.id === item.id }" v-for="item in addressData"
+                :key="item.id" @click="switchAddress(item)">
                 <ul>
                     <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
                     <li><span>联系方式：</span>{{ item.contact }}</li>
@@ -170,7 +176,7 @@ const submitOrder = async () => {
             </span>
         </template>
     </el-dialog>
-    <!-- 添加地址 -->
+
 </template>
 
 <style scoped lang="scss">

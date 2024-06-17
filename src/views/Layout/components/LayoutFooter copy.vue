@@ -84,7 +84,7 @@
         }
 
         dl {
-            height: 180px;
+            height: 150px;
             text-align: center;
             color: #999;
 
@@ -99,7 +99,7 @@
 
         dd {
             width: 150px;
-            height: 180px;
+            height: 150px;
             flex-direction: column;
             display: flex;
             justify-content: center;
@@ -147,7 +147,7 @@
     .extra {
         padding-top: 15px;
         background-color: #333333;
-        height: 60px;
+        height: 74px;
 
         .copyright {
 
@@ -155,7 +155,8 @@
             font-size: 15px;
         }
 
-        p {
+        p,
+        a {
             color: #ffffffe8;
         }
     }

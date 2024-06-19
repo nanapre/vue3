@@ -55,6 +55,15 @@ npm run lint
 购物车页面：
 ![13a40c361e316e9801d9f1b7eb7c21d](https://github.com/nanapre/vue3/assets/171127789/2d776438-f19b-4b16-bdab-e8eef9aff04e)
 ![9af392af440bae0e177651c2ce89cad](https://github.com/nanapre/vue3/assets/171127789/d332ec13-b206-4bcf-8a8c-adb09678f9fe)
-结算页：
-
+订单页：
+![8f5f5ae7509e1b14f20b1e30c7ff176](https://github.com/nanapre/vue3/assets/171127789/89e8610b-d027-4a38-b645-1541b0ee885b)
+![754c7a1041c2eda9c57689d9ec2b014](https://github.com/nanapre/vue3/assets/171127789/18abd0cf-eddc-402f-b447-8b95b78870cf)
+支付页：
+![6eff21ced220a52affb251c2ce42813](https://github.com/nanapre/vue3/assets/171127789/e324cdd2-d884-4d66-9d7f-ec18958152db)
+个人中心页：
+![619a51b55163620c778b1ead173b630](https://github.com/nanapre/vue3/assets/171127789/3cf872a3-0477-4efd-b5f1-f0face697028)
+地址管理页：
+![1d6376fd9b586369b9660242bf2643c](https://github.com/nanapre/vue3/assets/171127789/a70e8697-7d16-4328-9449-d261972bc12d)
+我的订单页：
+![edcade8839a6521c3837ee4523d3d99](https://github.com/nanapre/vue3/assets/171127789/d16684cb-8e51-44af-899d-b827b9846548)
 
